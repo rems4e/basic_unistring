@@ -306,4 +306,42 @@ std::ostream &operator<<(std::ostream &stream, basic_unistring<CharType> const &
     return stream;
 }
 
+
+template <typename CharType, typename T>
+basic_unistring<CharType, T> operator+(basic_unistring<CharType, T> const &lhs, basic_unistring<CharType, T> const &rhs) {
+    return basic_unistring<CharType, T>(lhs).append(rhs);
+}
+
+template <typename CharType, typename T, typename CharType2, typename Traits, typename Alloc>
+basic_unistring<CharType, T>
+operator+(basic_unistring<CharType, T> const &lhs, std::basic_string<CharType2, Traits, Alloc> const &rhs) {
+    return basic_unistring<CharType, T>(lhs).append(rhs);
+}
+
+template <typename CharType, typename T, typename CharType2>
+basic_unistring<CharType, T> operator+(basic_unistring<CharType, T> const &lhs, CharType2 const *rhs) {
+    return basic_unistring<CharType, T>(lhs) + basic_unistring<CharType, T>(rhs);
+}
+
+template <typename CharType, typename T>
+basic_unistring<CharType, T> operator+(basic_unistring<CharType, T> const &lhs, CharType rhs) {
+    return basic_unistring<CharType, T>(lhs) + basic_unistring<CharType, T>(1, rhs);
+}
+
+template <typename CharType, typename T, typename CharType2, typename Traits, typename Alloc>
+basic_unistring<CharType, T>
+operator+(std::basic_string<CharType2, Traits, Alloc> const &rhs, basic_unistring<CharType, T> const &lhs) {
+    return basic_unistring<CharType, T>(lhs).append(rhs);
+}
+
+template <typename CharType, typename T, typename CharType2>
+basic_unistring<CharType, T> operator+(CharType2 const *rhs, basic_unistring<CharType, T> const &lhs) {
+    return basic_unistring<CharType, T>(lhs) + basic_unistring<CharType, T>(rhs);
+}
+
+template <typename CharType, typename T>
+basic_unistring<CharType, T> operator+(CharType rhs, basic_unistring<CharType, T> const &lhs) {
+    return basic_unistring<CharType, T>(lhs) + basic_unistring<CharType, T>(1, rhs);
+}
+
 #endif /* unistring_hpp */
