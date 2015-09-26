@@ -48,7 +48,7 @@ public:
     template <typename CharType2, typename... Args>
     static basic_unistring createWithFormat(basic_unistring<CharType2> format, Args &&... args) {
         basic_unistring string;
-        string.appendFormat(std::forward<Args &&>(args)...);
+        string.append_format(format, std::forward<Args &&>(args)...);
 
         return string;
     }
@@ -269,7 +269,7 @@ basic_unistring<CharType, T> &basic_unistring<CharType, T>::append_format(basic_
             auto end = format.find((CharType)'}', start + 1);
             if(end != npos) {
                 size_t index;
-                std::stringstream str(format.substr(start, end - start).toUtf8());
+                std::stringstream str(format.substr(start, end - start).to_utf8());
                 str >> index;
                 if(str.fail() || !str.eof()) {
                     index = -1;
