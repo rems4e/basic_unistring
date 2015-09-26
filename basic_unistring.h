@@ -56,7 +56,8 @@ public:
     }
 
     /**
-     * Constructs the basic_unistring object from the given null-terminated, wide or narrow char array, performaing the necessary
+     * Constructs the basic_unistring object from the given null-terminated, wide or narrow char array, performaing the
+     * necessary
      * conversion.
      */
     template <typename CharType2, typename = std::enable_if_t<!std::is_same_v<CharType, CharType2>>>
@@ -287,9 +288,11 @@ basic_unistring<CharType, T> &basic_unistring<CharType, T>::append_format(basic_
     return *this;
 }
 
-basic_unistring<char> operator""_u8(char const *str, size_t length);
-basic_unistring<char16_t> operator""_u16(char const *str, size_t length);
-basic_unistring<char32_t> operator""_u32(char const *str, size_t length);
+namespace unistring_literals {
+    basic_unistring<char> operator""_u8(char const *str, size_t length);
+    basic_unistring<char16_t> operator""_u16(char const *str, size_t length);
+    basic_unistring<char32_t> operator""_u32(char const *str, size_t length);
+}
 
 extern template class basic_unistring<char>;
 extern template class basic_unistring<char16_t>;
