@@ -45,8 +45,6 @@ public:
 
     using base_type::npos;
 
-    using std::basic_string<CharType>::basic_string;
-
     template <typename CharType2, typename... Args>
     static basic_unistring createWithFormat(basic_unistring<CharType2> format, Args &&... args) {
         basic_unistring string;
@@ -54,6 +52,10 @@ public:
 
         return string;
     }
+
+    using std::basic_string<CharType>::basic_string;
+
+    basic_unistring() {}
 
     /**
      * Constructs the basic_unistring object from the given null-terminated, wide or narrow char array, performaing the
