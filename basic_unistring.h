@@ -140,6 +140,49 @@ public:
 
     using base_type::compare;
     using base_type::replace;
+
+    template <typename InputIt>
+    std::enable_if_t<std::is_convertible_v<typename InputIt::iterator_category, std::input_iterator_tag>, basic_unistring &>
+    replace(InputIt it1, InputIt it2, basic_unistring<CharType> const &value) {
+        this->basic_string::replace(it1, it2, value.begin(), value.end());
+        return *this;
+    }
+    template <typename InputIt>
+    std::enable_if_t<std::is_convertible_v<typename InputIt::iterator_category, std::input_iterator_tag>, basic_unistring &>
+    replace(InputIt it1, InputIt it2, std::basic_string<CharType> const &value) {
+        this->basic_string::replace(it1, it2, value.begin(), value.end());
+        return *this;
+    }
+    template <typename InputIt>
+    std::enable_if_t<std::is_convertible_v<typename InputIt::iterator_category, std::input_iterator_tag>, basic_unistring &>
+    replace(InputIt it1, InputIt it2, CharType const *value) {
+        this->basic_string::replace(it1, it2, value);
+        return *this;
+    }
+    template <typename InputIt>
+    std::enable_if_t<std::is_convertible_v<typename InputIt::iterator_category, std::input_iterator_tag>, basic_unistring &>
+    replace(InputIt it1, InputIt it2, size_type count, CharType value) {
+        this->basic_string::replace(it1, it2, count, value);
+        return *this;
+    }
+
+    basic_unistring &replace(size_type pos, size_type count, basic_unistring<CharType> const &value) {
+        this->replace(begin() + pos, begin() + pos + count, value.begin(), value.end());
+        return *this;
+    }
+    basic_unistring &replace(size_type pos, size_type count, std::basic_string<CharType> const &value) {
+        this->replace(begin() + pos, begin() + pos + count, value.begin(), value.end());
+        return *this;
+    }
+    basic_unistring &replace(size_type pos, size_type count, CharType const *value) {
+        this->replace(begin() + pos, begin() + pos + count, value);
+        return *this;
+    }
+    basic_unistring &replace(size_type pos, size_type count, size_type count2, CharType value) {
+        this->replace(begin() + pos, begin() + pos + count, count2, value);
+        return *this;
+    }
+
     basic_unistring substr(size_type pos = 0, size_type n = npos) const {
         return basic_unistring(*this, pos, n);
     }
@@ -251,7 +294,7 @@ void basic_unistring<CharType, T>::map_arguments(std::vector<basic_unistring> &v
     ss << arg;
     vect.push_back(ss.str());
 
-    mapArguments(vect, args...);
+    map_arguments(vect, args...);
 }
 
 template <typename CharType, typename T>
@@ -306,6 +349,7 @@ std::ostream &operator<<(std::ostream &stream, basic_unistring<CharType> const &
     return stream;
 }
 
+// operator+
 
 template <typename CharType, typename T>
 basic_unistring<CharType, T> operator+(basic_unistring<CharType, T> const &lhs, basic_unistring<CharType, T> const &rhs) {
@@ -343,5 +387,39 @@ template <typename CharType, typename T>
 basic_unistring<CharType, T> operator+(CharType rhs, basic_unistring<CharType, T> const &lhs) {
     return basic_unistring<CharType, T>(lhs) + basic_unistring<CharType, T>(1, rhs);
 }
+
+// Comparison operators
+
+inline bool operator==(basic_unistring<char32_t> const &lhs, basic_unistring<char32_t> const &rhs) {
+    return std::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+}
+
+inline bool operator<(basic_unistring<char32_t> const &lhs, basic_unistring<char32_t> const &rhs) {
+    return std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+}
+
+inline bool operator!=(basic_unistring<char32_t> const &lhs, basic_unistring<char32_t> const &rhs) {
+    return !(lhs == rhs);
+}
+
+inline bool operator>(basic_unistring<char32_t> const &lhs, basic_unistring<char32_t> const &rhs) {
+    return rhs < lhs;
+}
+
+inline bool operator>=(basic_unistring<char32_t> const &lhs, basic_unistring<char32_t> const &rhs) {
+    return !(lhs < rhs);
+}
+
+inline bool operator<=(basic_unistring<char32_t> const &lhs, basic_unistring<char32_t> const &rhs) {
+    return !(lhs > rhs);
+}
+
+template <typename CharType>
+struct std::hash<basic_unistring<CharType>> {
+    // Horribly inefficient, this has to be rewritten.
+    size_t operator()(basic_unistring<CharType> const &key) const {
+        return std::hash<std::basic_string<char32_t>>{}(key.to_utf32());
+    }
+};
 
 #endif /* unistring_hpp */
