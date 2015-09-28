@@ -56,6 +56,15 @@ public:
 
     basic_unistring() {}
 
+    basic_unistring(basic_unistring const &other, size_type pos, size_type count = basic_unistring::npos) {
+        auto first = other.begin() + pos, last = other.end();
+        if(count != basic_unistring::npos) {
+            last = other.begin() + pos + count;
+        }
+
+        *this = basic_unistring(first, last);
+    }
+
     /**
      * Constructs the basic_unistring object from the given null-terminated, wide or narrow char array, performaing the
      * necessary
@@ -234,7 +243,7 @@ public:
         return this->split(basic_unistring{ separator });
     }
 
-    template <template <typename T> class Container = std::vector>
+    template <template <typename...> class Container = std::vector>
     Container<basic_unistring> split(basic_unistring const &separator) const;
 
     template <typename CharType2>
@@ -270,7 +279,7 @@ private:
 };
 
 template <typename CharType, typename T>
-template <template <typename> class Container>
+template <template <typename...> class Container>
 Container<basic_unistring<CharType, T>> basic_unistring<CharType, T>::split(basic_unistring<CharType, T> const &separator) const {
     Container<basic_unistring<CharType, T>> container;
     size_type start = 0;
@@ -393,15 +402,63 @@ inline bool operator==(basic_unistring<char32_t> const &lhs, basic_unistring<cha
     return std::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 }
 
+template <typename CharType, typename T>
+inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
+operator==(basic_unistring<CharType> const &lhs, T const &rhs) {
+    return basic_unistring<char32_t>{ lhs } == basic_unistring<char32_t>{ rhs };
+}
+
+template <typename CharType, typename T>
+inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
+operator==(T const &lhs, basic_unistring<CharType> const &rhs) {
+    return rhs == lhs;
+}
+
 inline bool operator<(basic_unistring<char32_t> const &lhs, basic_unistring<char32_t> const &rhs) {
     return std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+}
+
+template <typename CharType, typename T>
+inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
+operator<(basic_unistring<CharType> const &lhs, T const &rhs) {
+    return basic_unistring<char32_t>{ lhs } < basic_unistring<char32_t>{ rhs };
+}
+
+template <typename CharType, typename T>
+inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
+operator<(T const &lhs, basic_unistring<CharType> const &rhs) {
+    return rhs > lhs;
 }
 
 inline bool operator!=(basic_unistring<char32_t> const &lhs, basic_unistring<char32_t> const &rhs) {
     return !(lhs == rhs);
 }
 
+template <typename CharType, typename T>
+inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
+operator!=(basic_unistring<CharType> const &lhs, T const &rhs) {
+    return basic_unistring<char32_t>{ lhs } != basic_unistring<char32_t>{ rhs };
+}
+
+template <typename CharType, typename T>
+inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
+operator!=(T const &lhs, basic_unistring<CharType> const &rhs) {
+    return rhs != lhs;
+}
+
 inline bool operator>(basic_unistring<char32_t> const &lhs, basic_unistring<char32_t> const &rhs) {
+    return rhs < lhs;
+}
+
+template <typename CharType, typename T>
+inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
+operator>(basic_unistring<CharType> const &lhs, T const &rhs) {
+    return basic_unistring<char32_t>{ lhs } > basic_unistring<char32_t>{ rhs };
+}
+
+template <typename CharType, typename T>
+inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
+operator>(T const &lhs, basic_unistring<CharType> const &rhs) {
     return rhs < lhs;
 }
 
@@ -409,8 +466,32 @@ inline bool operator>=(basic_unistring<char32_t> const &lhs, basic_unistring<cha
     return !(lhs < rhs);
 }
 
+template <typename CharType, typename T>
+inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
+operator>=(basic_unistring<CharType> const &lhs, T const &rhs) {
+    return basic_unistring<char32_t>{ lhs } >= basic_unistring<char32_t>{ rhs };
+}
+
+template <typename CharType, typename T>
+inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
+operator>=(T const &lhs, basic_unistring<CharType> const &rhs) {
+    return !(rhs < lhs);
+}
+
 inline bool operator<=(basic_unistring<char32_t> const &lhs, basic_unistring<char32_t> const &rhs) {
     return !(lhs > rhs);
+}
+
+template <typename CharType, typename T>
+inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
+operator<=(basic_unistring<CharType> const &lhs, T const &rhs) {
+    return basic_unistring<char32_t>{ lhs } <= basic_unistring<char32_t>{ rhs };
+}
+
+template <typename CharType, typename T>
+inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
+operator<=(T const &lhs, basic_unistring<CharType> const &rhs) {
+    return !(rhs > lhs);
 }
 
 template <typename CharType>
