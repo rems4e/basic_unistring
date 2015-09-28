@@ -238,7 +238,7 @@ public:
 
     basic_unistring get_normalized() const;
 
-    template <template <typename> class Container = std::vector>
+    template <template <typename...> class Container = std::vector>
     Container<basic_unistring> split(CharType separator) const {
         return this->split(basic_unistring{ separator });
     }
