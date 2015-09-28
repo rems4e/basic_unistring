@@ -1,6 +1,5 @@
 //
 //  unistring.hpp
-//  RPG 3D
 //
 //  Created by Rémi on 22/09/2015.
 //
