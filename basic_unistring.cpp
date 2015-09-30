@@ -118,15 +118,15 @@ namespace {
 
 namespace unistring_literals {
     basic_unistring<char> operator""_u8(char const *str, size_t length) {
-        return { str };
+        return {str};
     }
 
     basic_unistring<char16_t> operator""_u16(char const *str, size_t length) {
-        return { str };
+        return {str};
     }
 
     basic_unistring<char32_t> operator""_u32(char const *str, size_t length) {
-        return { str };
+        return {str};
     }
 }
 

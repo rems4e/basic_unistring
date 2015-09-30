@@ -207,17 +207,17 @@ public:
 
     template <bool = std::is_same_v<CharType, char>>
     std::string to_utf8() const {
-        return { begin(), end() };
+        return {begin(), end()};
     }
 
     template <bool = std::is_same_v<CharType, char16_t>>
     std::u16string to_utf16() const {
-        return { begin(), end() };
+        return {begin(), end()};
     }
 
     template <bool = std::is_same_v<CharType, char32_t>>
     std::u32string to_utf32() const {
-        return { begin(), end() };
+        return {begin(), end()};
     }
 
     operator std::string() const {
@@ -240,7 +240,7 @@ public:
 
     template <template <typename...> class Container = std::vector>
     Container<basic_unistring> split(CharType separator) const {
-        return this->split(basic_unistring{ separator });
+        return this->split(basic_unistring{separator});
     }
 
     template <template <typename...> class Container = std::vector>
@@ -248,24 +248,24 @@ public:
 
     template <typename CharType2>
     bool starts_with(basic_unistring<CharType2> const &substr) {
-        return this->startsWith(basic_unistring{ substr });
+        return this->startsWith(basic_unistring{substr});
     }
     bool starts_with(basic_unistring<CharType> const &substr);
 
     template <typename CharType2>
     bool ends_with(basic_unistring<CharType2> const &substr) {
-        return this->ends_with(basic_unistring{ substr });
+        return this->ends_with(basic_unistring{substr});
     }
     bool ends_with(basic_unistring<CharType> const &substr);
 
     template <typename CharType2, typename... Args>
     basic_unistring &append_format(basic_unistring<CharType2> format, Args &&... args) {
-        return this->append_format(basic_unistring{ format }, args...);
+        return this->append_format(basic_unistring{format}, args...);
     }
 
     template <typename CharType2, typename... Args>
     basic_unistring &append_format(std::basic_string<CharType2> format, Args &&... args) {
-        return this->append_format(basic_unistring{ format }, args...);
+        return this->append_format(basic_unistring{format}, args...);
     }
 
     template <typename... Args>
@@ -405,7 +405,7 @@ inline bool operator==(basic_unistring<char32_t> const &lhs, basic_unistring<cha
 template <typename CharType, typename T>
 inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
 operator==(basic_unistring<CharType> const &lhs, T const &rhs) {
-    return basic_unistring<char32_t>{ lhs } == basic_unistring<char32_t>{ rhs };
+    return basic_unistring<char32_t>{lhs} == basic_unistring<char32_t>{rhs};
 }
 
 template <typename CharType, typename T>
@@ -421,7 +421,7 @@ inline bool operator<(basic_unistring<char32_t> const &lhs, basic_unistring<char
 template <typename CharType, typename T>
 inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
 operator<(basic_unistring<CharType> const &lhs, T const &rhs) {
-    return basic_unistring<char32_t>{ lhs } < basic_unistring<char32_t>{ rhs };
+    return basic_unistring<char32_t>{lhs} < basic_unistring<char32_t>{rhs};
 }
 
 template <typename CharType, typename T>
@@ -437,7 +437,7 @@ inline bool operator!=(basic_unistring<char32_t> const &lhs, basic_unistring<cha
 template <typename CharType, typename T>
 inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
 operator!=(basic_unistring<CharType> const &lhs, T const &rhs) {
-    return basic_unistring<char32_t>{ lhs } != basic_unistring<char32_t>{ rhs };
+    return basic_unistring<char32_t>{lhs} != basic_unistring<char32_t>{rhs};
 }
 
 template <typename CharType, typename T>
@@ -453,7 +453,7 @@ inline bool operator>(basic_unistring<char32_t> const &lhs, basic_unistring<char
 template <typename CharType, typename T>
 inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
 operator>(basic_unistring<CharType> const &lhs, T const &rhs) {
-    return basic_unistring<char32_t>{ lhs } > basic_unistring<char32_t>{ rhs };
+    return basic_unistring<char32_t>{lhs} > basic_unistring<char32_t>{rhs};
 }
 
 template <typename CharType, typename T>
@@ -469,7 +469,7 @@ inline bool operator>=(basic_unistring<char32_t> const &lhs, basic_unistring<cha
 template <typename CharType, typename T>
 inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
 operator>=(basic_unistring<CharType> const &lhs, T const &rhs) {
-    return basic_unistring<char32_t>{ lhs } >= basic_unistring<char32_t>{ rhs };
+    return basic_unistring<char32_t>{lhs} >= basic_unistring<char32_t>{rhs};
 }
 
 template <typename CharType, typename T>
@@ -485,7 +485,7 @@ inline bool operator<=(basic_unistring<char32_t> const &lhs, basic_unistring<cha
 template <typename CharType, typename T>
 inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
 operator<=(basic_unistring<CharType> const &lhs, T const &rhs) {
-    return basic_unistring<char32_t>{ lhs } <= basic_unistring<char32_t>{ rhs };
+    return basic_unistring<char32_t>{lhs} <= basic_unistring<char32_t>{rhs};
 }
 
 template <typename CharType, typename T>
