@@ -1,3 +1,25 @@
+/*
+ * Copyright (c) 2015 Rémi Saurel
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 //
 //  unistring.hpp
 //
@@ -151,25 +173,25 @@ public:
 
     template <typename InputIt>
     std::enable_if_t<std::is_convertible_v<typename InputIt::iterator_category, std::input_iterator_tag>, basic_unistring &>
-    replace(InputIt it1, InputIt it2, basic_unistring<CharType> const &value) {
+        replace(InputIt it1, InputIt it2, basic_unistring<CharType> const &value) {
         this->basic_string::replace(it1, it2, value.begin(), value.end());
         return *this;
     }
     template <typename InputIt>
     std::enable_if_t<std::is_convertible_v<typename InputIt::iterator_category, std::input_iterator_tag>, basic_unistring &>
-    replace(InputIt it1, InputIt it2, std::basic_string<CharType> const &value) {
+        replace(InputIt it1, InputIt it2, std::basic_string<CharType> const &value) {
         this->basic_string::replace(it1, it2, value.begin(), value.end());
         return *this;
     }
     template <typename InputIt>
     std::enable_if_t<std::is_convertible_v<typename InputIt::iterator_category, std::input_iterator_tag>, basic_unistring &>
-    replace(InputIt it1, InputIt it2, CharType const *value) {
+        replace(InputIt it1, InputIt it2, CharType const *value) {
         this->basic_string::replace(it1, it2, value);
         return *this;
     }
     template <typename InputIt>
     std::enable_if_t<std::is_convertible_v<typename InputIt::iterator_category, std::input_iterator_tag>, basic_unistring &>
-    replace(InputIt it1, InputIt it2, size_type count, CharType value) {
+        replace(InputIt it1, InputIt it2, size_type count, CharType value) {
         this->basic_string::replace(it1, it2, count, value);
         return *this;
     }
@@ -366,7 +388,7 @@ basic_unistring<CharType, T> operator+(basic_unistring<CharType, T> const &lhs, 
 
 template <typename CharType, typename T, typename CharType2, typename Traits, typename Alloc>
 basic_unistring<CharType, T>
-operator+(basic_unistring<CharType, T> const &lhs, std::basic_string<CharType2, Traits, Alloc> const &rhs) {
+    operator+(basic_unistring<CharType, T> const &lhs, std::basic_string<CharType2, Traits, Alloc> const &rhs) {
     return basic_unistring<CharType, T>(lhs).append(rhs);
 }
 
@@ -382,7 +404,7 @@ basic_unistring<CharType, T> operator+(basic_unistring<CharType, T> const &lhs, 
 
 template <typename CharType, typename T, typename CharType2, typename Traits, typename Alloc>
 basic_unistring<CharType, T>
-operator+(std::basic_string<CharType2, Traits, Alloc> const &rhs, basic_unistring<CharType, T> const &lhs) {
+    operator+(std::basic_string<CharType2, Traits, Alloc> const &rhs, basic_unistring<CharType, T> const &lhs) {
     return basic_unistring<CharType, T>(lhs).append(rhs);
 }
 
@@ -404,13 +426,13 @@ inline bool operator==(basic_unistring<char32_t> const &lhs, basic_unistring<cha
 
 template <typename CharType, typename T>
 inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
-operator==(basic_unistring<CharType> const &lhs, T const &rhs) {
+    operator==(basic_unistring<CharType> const &lhs, T const &rhs) {
     return basic_unistring<char32_t>{lhs} == basic_unistring<char32_t>{rhs};
 }
 
 template <typename CharType, typename T>
 inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
-operator==(T const &lhs, basic_unistring<CharType> const &rhs) {
+    operator==(T const &lhs, basic_unistring<CharType> const &rhs) {
     return rhs == lhs;
 }
 
@@ -420,13 +442,13 @@ inline bool operator<(basic_unistring<char32_t> const &lhs, basic_unistring<char
 
 template <typename CharType, typename T>
 inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
-operator<(basic_unistring<CharType> const &lhs, T const &rhs) {
+    operator<(basic_unistring<CharType> const &lhs, T const &rhs) {
     return basic_unistring<char32_t>{lhs} < basic_unistring<char32_t>{rhs};
 }
 
 template <typename CharType, typename T>
 inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
-operator<(T const &lhs, basic_unistring<CharType> const &rhs) {
+    operator<(T const &lhs, basic_unistring<CharType> const &rhs) {
     return rhs > lhs;
 }
 
@@ -436,13 +458,13 @@ inline bool operator!=(basic_unistring<char32_t> const &lhs, basic_unistring<cha
 
 template <typename CharType, typename T>
 inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
-operator!=(basic_unistring<CharType> const &lhs, T const &rhs) {
+    operator!=(basic_unistring<CharType> const &lhs, T const &rhs) {
     return basic_unistring<char32_t>{lhs} != basic_unistring<char32_t>{rhs};
 }
 
 template <typename CharType, typename T>
 inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
-operator!=(T const &lhs, basic_unistring<CharType> const &rhs) {
+    operator!=(T const &lhs, basic_unistring<CharType> const &rhs) {
     return rhs != lhs;
 }
 
@@ -452,13 +474,13 @@ inline bool operator>(basic_unistring<char32_t> const &lhs, basic_unistring<char
 
 template <typename CharType, typename T>
 inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
-operator>(basic_unistring<CharType> const &lhs, T const &rhs) {
+    operator>(basic_unistring<CharType> const &lhs, T const &rhs) {
     return basic_unistring<char32_t>{lhs} > basic_unistring<char32_t>{rhs};
 }
 
 template <typename CharType, typename T>
 inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
-operator>(T const &lhs, basic_unistring<CharType> const &rhs) {
+    operator>(T const &lhs, basic_unistring<CharType> const &rhs) {
     return rhs < lhs;
 }
 
@@ -468,13 +490,13 @@ inline bool operator>=(basic_unistring<char32_t> const &lhs, basic_unistring<cha
 
 template <typename CharType, typename T>
 inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
-operator>=(basic_unistring<CharType> const &lhs, T const &rhs) {
+    operator>=(basic_unistring<CharType> const &lhs, T const &rhs) {
     return basic_unistring<char32_t>{lhs} >= basic_unistring<char32_t>{rhs};
 }
 
 template <typename CharType, typename T>
 inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
-operator>=(T const &lhs, basic_unistring<CharType> const &rhs) {
+    operator>=(T const &lhs, basic_unistring<CharType> const &rhs) {
     return !(rhs < lhs);
 }
 
@@ -484,13 +506,13 @@ inline bool operator<=(basic_unistring<char32_t> const &lhs, basic_unistring<cha
 
 template <typename CharType, typename T>
 inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
-operator<=(basic_unistring<CharType> const &lhs, T const &rhs) {
+    operator<=(basic_unistring<CharType> const &lhs, T const &rhs) {
     return basic_unistring<char32_t>{lhs} <= basic_unistring<char32_t>{rhs};
 }
 
 template <typename CharType, typename T>
 inline std::enable_if_t<!std::is_same_v<T, basic_unistring<char32_t>>, bool>
-operator<=(T const &lhs, basic_unistring<CharType> const &rhs) {
+    operator<=(T const &lhs, basic_unistring<CharType> const &rhs) {
     return !(rhs > lhs);
 }
 
